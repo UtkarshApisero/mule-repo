@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="af1c4cfd-f0da-4c05-bb1b-600b41f50e42" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="dw1Flow" doc:id="334daf0e-0d5d-4fe6-adf4-3da385025b01" >
+		<http:listener doc:name="Listener" doc:id="5416eebc-2e44-49f7-b9ef-c5b5e1ea284a" config-ref="HTTP_Listener_config" path="/"/>
+		<ee:transform doc:name="Transform Message" doc:id="0c3ac5a0-7030-48da-ae58-3c8be9b7804d" >
+			<ee:message >
+				<ee:set-payload resource="mydw.dwl" />
+				<ee:set-attributes ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	att1: "hello"
+}]]></ee:set-attributes>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="91d8d2ac-a585-4dac-841e-76f162a408a7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	att3: "muley"
+}]]></ee:set-payload>
+				<ee:set-attributes ><![CDATA[%dw 2.0
+output application/java
+---
+{  
+	test: "value"
+}]]></ee:set-attributes>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="8bdac311-effe-41e7-adc3-80faec5a8938" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="7c702c0c-42fc-44a0-82ee-3873c2da863c" message="#[message.attributes ++ payload]"/>
+	</flow>
+</mule>
