@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="f6f9b0bb-fff4-40af-9317-215e19c9d2cc" >
+		<db:mssql-connection host="demotrustserver.database.windows.net" instanceName="demotrustserver" port="1433" user="AdminDba" password="AzureDB99!" databaseName="AzurePOCDB" />
+	</db:config>
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="140e0214-6a75-4541-8663-a67371649879" >
+		<http:listener-connection host="${http.host}" port="${http.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="25082376-5d1b-4299-b9c1-3b397da51253" file="config\configuration.yaml" />
+	<flow name="azure_db_demoFlow" doc:id="efba422b-b5dc-49d7-96ae-e3982dcb1083" >
+		<http:listener doc:name="Listener" doc:id="40089100-2e23-4cd0-9653-c75e86961042" config-ref="HTTP_Listener_config" path="/insert_db"/>
+		<db:insert doc:name="Insert" doc:id="b12fb690-efb9-4e76-92d8-2ac92cfed5b4" config-ref="Database_Config">
+			<db:sql ><![CDATA[INSERT INTO DataPref_delete(Rec_id, FirstName, Lastname, OneTrust_id,Create_dttm)
+    VALUES (2,'Max','Mule','001-A','18-mar-2020');]]></db:sql>
+		</db:insert>
+	</flow>
+</mule>
