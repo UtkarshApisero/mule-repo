@@ -1,13 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mycompany</groupId>
-	<artifactId>world-demo-api</artifactId>
+	<artifactId>mulesoft-jenkins-demo</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>mule-application</packaging>
 
-	<name>world-demo-api</name>
+	<name>mulesoft-jenkins-demo</name>
 
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,9 +31,34 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-				<classifier>mule-application</classifier>
-                </configuration>
+				<cloudHubDeployment>
+
+      <uri>https://anypoint.mulesoft.com/</uri>
+
+      <muleVersion>mule-version</muleVersion>
+
+      <username>utkarsh1803_1</username>
+
+      <password>Nothing@01</password>
+
+      <applicationName>mulesoft-jenkins-demo</applicationName>
+
+      <environment>SANDBOX</environment>
+
+      <properties>
+
+        <key>value</key>
+
+      </properties>
+
+  </cloudHubDeployment>
+				</configuration>
 			</plugin>
+		
+
+
+
+
 		</plugins>
 	</build>
 
